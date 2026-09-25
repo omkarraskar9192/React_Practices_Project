@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
 import { Navbar, Sidebar } from '../components'
+import { useSelector , useDispatch} from 'react-redux';
 
 function Dashboard() {
-  const [students, setStudents] = useState(0)
+
   const [marks, setMarks] = useState(0)
+  const dispatch = useDispatch();
+  const studentsList = useSelector((state) => state.students.students);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -19,7 +22,13 @@ function Dashboard() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="bg-white p-5 rounded-lg border border-gray-200 shadow-sm">
               <p className="text-sm font-medium text-gray-500">Students</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">{students}</p>
+              <p className="text-2xl font-bold text-gray-900 mt-1">{studentsList.length}</p>
+              <button
+                className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+                onClick={() => dispatch({ type: 'students/addStudent', payload: { name: 'New Student' } })}
+              >
+                Add Student
+              </button>
             </div>
 
             <div className="bg-white p-5 rounded-lg border border-gray-200 shadow-sm">
