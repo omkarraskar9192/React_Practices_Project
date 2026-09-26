@@ -1,20 +1,21 @@
 import React from 'react'
-import {Navigate, Route, Routes} from 'react-router-dom'
+import {Link, Navigate, NavLink, Route, Routes} from 'react-router-dom'
 
 function Sidebar() {
 
+  
   const navItems=[
     {
       name:"Dashboard",
-      slug:"dashboard",
+      slug:"/",
     },
     {
-      name:"Students",
-      slug:"students",}
+      name:"Add Student",
+      slug:"addstudent",}
       ,
       {
-        name:"Courses",
-        slug:"courses",
+        name:"Student",
+        slug:"student",
       },{
         name:"Settings",
         slug:"settings",
@@ -26,9 +27,12 @@ function Sidebar() {
         <h1 className='text-2xl font-bold p-4'>Student Management</h1>
         <ul>
           {navItems.map((item)=>(
-            <li key={item.name} className='px-4 py-2 hover:bg-gray-700 cursor-pointer'>
+          <NavLink key={item.name} to={item.slug}>
+            <li  className='px-4 py-2 hover:bg-gray-700 cursor-pointer' >
               {item.name}
+              
             </li>
+          </NavLink>
           ))}
         </ul>
       </div>
