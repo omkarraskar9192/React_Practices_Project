@@ -19,6 +19,7 @@ const router = createBrowserRouter(
       <Route path='addstudent' element={<AddStudent/>} />
       <Route path='settings' element={<Settings/>} />
       <Route path='student' element={<Students/>} />
+      <Route path='/edit-student/:id' element={<AddStudent/>} />
 
     </Route>
   )

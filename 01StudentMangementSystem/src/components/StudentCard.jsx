@@ -1,6 +1,15 @@
 import React from 'react'
 import { removeStudent, updateStudent } from '../redux/studentSlice';
+import { useDispatch } from 'react-redux';
+import { Navigate, useNavigate } from 'react-router-dom';
 function StudentCard({students}) {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const handleStudentRemove = (id)=>{
+
+    const prammition=window.confirm("Are you sure you want to delete this student?")
+    prammition ? (dispatch(removeStudent(id))) : null
+  }
   return (
       <div className="p-4">
       <label className="block text-xl font-bold text-gray-800 mb-4">
@@ -18,8 +27,8 @@ function StudentCard({students}) {
             <h1 className="text-sm text-gray-700">Attendance: {student.attendance}</h1>
           </div>
           <div>
-            <button onClick={()=>dispatch(updateStudent(student))}>Update</button>
-            <button onClick={()=>dispatch(removeStudent(student.id))}>Delete </button>
+            <button onClick={()=> navigate(`/edit-student/${student.id}`)}>Update</button>
+            <button onClick={()=>handleStudentRemove(student.id)}>Delete </button>
           </div>
           </div>
         ))}

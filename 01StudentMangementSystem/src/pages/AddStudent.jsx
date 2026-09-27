@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux';
-import { addStudent } from '../redux/studentSlice';
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { addStudent, updateStudent } from '../redux/studentSlice';
+import { useParams } from 'react-router-dom';
 
 function AddStudent() {
     const [name,setName] = useState('')
@@ -11,21 +12,50 @@ function AddStudent() {
     const [attendance,setAttemtdance] = useState('')
     const dispatch = useDispatch()
     const handleSubmit= (e)=>{
-        e.preventDefault()
-        dispatch(addStudent({id:Date.now(),name,email,course,age,marks,attendance}))
-        setAge('')
-        setAttemtdance('')
-        setName('')
-        setEmail('')
-        setCourse('')
-        setMarks('')
+      e.preventDefault()
+      if(id){
+      dispatch(updateStudent({id:Number(id),name,email,course,age,marks,attendance}))
+      setAge('')
+      setAttemtdance('')
+      setName('')
+      setEmail('')
+      setCourse('')
+      setMarks('')
 
-        
+      }else{
+      dispatch(addStudent({id:Date.now(),name,email,course,age,marks,attendance}))
+      setAge('')
+      setAttemtdance('')
+      setName('')
+      setEmail('')
+      setCourse('')
+      setMarks('')
+      }
 
         
     }
 
+
+    const {id} = useParams()
+    const studentsData = useSelector((state)=> state.students.students)
+    const student = studentsData.find(std => std.id === Number(id))
+    useEffect(()=>{
+      if(student){
+      setName(student.name)
+      setEmail(student.email)
+      setCourse(student.course)
+      setAge(student.age)
+      setMarks(student.marks)
+      setAttemtdance(student.attendance)
+      }
+
+    },[student])
+
+
+
+    
   return (
+
     <div className="max-w-md mx-auto my-8 p-6 bg-white rounded-xl shadow-md border border-gray-200">
       <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Add New Student</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -101,8 +131,9 @@ function AddStudent() {
           type="submit"
           className="w-full mt-4 py-2.5 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow-sm transition duration-200 text-sm"
         >
-          Add Student
+          { id ? "Update Student" : 'Add Student'}
         </button>
+
       </form>
     </div>
   )
