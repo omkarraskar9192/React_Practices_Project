@@ -7,7 +7,11 @@ function Students() {
   const students = useSelector((state) => state.students.students);
   const dispatch = useDispatch()
   const [search,setSearch]  = useState('')
-  const filterStudents = students.filter((student)=>student.name.toLowerCase().includes(search.toLowerCase()) ||student.email.toLowerCase().includes(search.toLowerCase()) || student.course.toLowerCase().includes(search.toLowerCase()) )
+  const [marksFilter,SetMarksFilter] = useState('all')
+  const filterMarks = students.filter((student)=> marksFilter == 'all' ? true : student.marks >= Number(marksFilter))
+  
+  const filterStudents = filterMarks.filter((student)=>student.name.toLowerCase().includes(search.toLowerCase()) ||student.email.toLowerCase().includes(search.toLowerCase()) || student.course.toLowerCase().includes(search.toLowerCase()) )
+  
 
   return (
     <div className="max-w-7xl mx-auto p-6 space-y-6">
@@ -15,6 +19,7 @@ function Students() {
         <div>
           <h1 className="text-2xl font-bold text-gray-800">Students Directory</h1>
           <p className="text-sm text-gray-500">Search and manage registered students</p>
+
         </div>
         <div className="relative w-full sm:w-72">
           <input
@@ -24,6 +29,14 @@ function Students() {
             onChange={(e) => setSearch(e.target.value)}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition shadow-sm"
           />
+          <select value={marksFilter} onChange={e => SetMarksFilter(e.target.value)}>
+            <option value={'all'}>all</option>
+            <option value={90}>90</option>
+            <option value={80}>80</option>
+            <option value={70}>70</option>
+            <option value={60}>60</option>
+
+          </select>
         </div>
       </div>
 
