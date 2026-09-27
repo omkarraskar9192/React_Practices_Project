@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { addStudent, updateStudent } from '../redux/studentSlice';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 function AddStudent() {
     const [name,setName] = useState('')
@@ -11,10 +11,12 @@ function AddStudent() {
     const [marks,setMarks] = useState('')
     const [attendance,setAttemtdance] = useState('')
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const handleSubmit= (e)=>{
       e.preventDefault()
       if(id){
       dispatch(updateStudent({id:Number(id),name,email,course,age,marks,attendance}))
+        navigate(`/student`)
       setAge('')
       setAttemtdance('')
       setName('')
