@@ -1,7 +1,6 @@
-import React from 'react'
-import { removeStudent, updateStudent } from '../redux/studentSlice';
+import { removeStudent} from '../redux/studentSlice';
 import { useDispatch } from 'react-redux';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 function StudentCard({students}) {
   const dispatch = useDispatch()
   const navigate = useNavigate()
